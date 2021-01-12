@@ -10,7 +10,7 @@ namespace SodaMachine
     {
         //Member Variables (Has A)
         protected double value;
-        public string Name;
+        protected string name;
 
         public double Value
         {
@@ -18,8 +18,14 @@ namespace SodaMachine
             {
                 return value;
             }
+        }
 
-
+        public string Name
+        {
+            get
+            {
+                return Name;
+            }
         }
         //Constructor (Spawner)
 
