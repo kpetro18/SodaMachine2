@@ -15,6 +15,9 @@ namespace SodaMachine
         int startingDimes = 10;
         int startingNickels = 20;
         int startingPennies = 50;
+        int startingRootBeer = 5;
+        int startingCola = 3;
+        int startingOrangeSoda = 0;
 
         //Constructor (Spawner)
         public SodaMachine()
@@ -74,8 +77,39 @@ namespace SodaMachine
         //A method to fill the sodamachines inventory with soda can objects.
         public void FillInventory()
         {
-            
+            AddRootBeer();
+            AddCola();
+            AddOrangeSoda();
         }
+
+        private void AddRootBeer()
+        {
+            for (int i = 0; i < startingRootBeer; i++)
+            {
+                RootBeer rootBeer = new RootBeer();
+                _inventory.Add(rootBeer);
+            }
+        }
+
+        private void AddCola()
+        {
+            for (int i = 0; i < startingCola; i++)
+            {
+            Cola cola = new Cola();
+            _inventory.Add(cola);
+            }
+        }
+
+        private void AddOrangeSoda()
+        {
+            for (int i = 0; i < startingOrangeSoda; i++)
+            {
+                OrangeSoda orangeSoda = new OrangeSoda();
+                _inventory.Add(orangeSoda);
+            }
+        }
+
+
         //Method to be called to start a transaction.
         //Takes in a customer which can be passed freely to which ever method needs it.
         public void BeginTransaction(Customer customer)
