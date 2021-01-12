@@ -9,13 +9,11 @@ namespace SodaMachine
     class Quarter:Coin
     {
         //Member Variables (Has A)
-        double value;
-
 
         //Constructor (Spawner)
         public Quarter()
         {
-            value = 0.25;
+        double value = 0.25;
         }
 
         //Member Methods (Can Do)
