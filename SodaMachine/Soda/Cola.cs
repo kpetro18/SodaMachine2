@@ -13,8 +13,8 @@ namespace SodaMachine
         //Constructor (Spawner)
         public Cola()
         {
-            Name = "Cola";
-            price = 0.50;
+            name = "Cola";
+            price = 0.35;
         }
 
         //Member Methods (Can Do)

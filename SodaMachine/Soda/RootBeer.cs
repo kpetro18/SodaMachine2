@@ -13,8 +13,8 @@ namespace SodaMachine
         //Constructor (Spawner)
         public RootBeer()
         {
-            Name = "Root Beer";
-            price = 0.30;
+            name = "Root Beer";
+            price = 0.60;
         }
         //Member Methods (Can Do)
     }
