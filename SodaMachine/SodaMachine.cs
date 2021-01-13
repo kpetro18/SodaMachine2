@@ -159,7 +159,34 @@ namespace SodaMachine
         //If the payment does not meet the cost of the soda: dispense payment back to the customer.
         private void CalculateTransaction(List<Coin> payment, Can chosenSoda, Customer customer)
         {
-           
+            double paymentValue = TotalCoinValue(payment);
+
+            if (paymentValue < chosenSoda.Price)
+            {
+                UserInterface.DisplayError("Not a enough money\n\nTransaction was not completed.\n\nPress enter to continue");
+                customer.AddCoinsIntoWallet(payment);
+            }
+            else if (paymentValue == chosenSoda.Price && _inventory.Count > 0)
+            {
+                DepositCoinsIntoRegister(payment);
+                customer.AddCanToBackpack(chosenSoda);
+                _inventory.Remove(chosenSoda);
+            }
+
+            else if (paymentValue > chosenSoda.Price && _inventory.Count > 0)
+            {
+                DepositCoinsIntoRegister(payment);
+                double changeValue = DetermineChange(paymentValue, chosenSoda.Price);
+                List<Coin> returnCoins = GatherChange(changeValue);
+                customer.AddCoinsIntoWallet(returnCoins);
+                customer.AddCanToBackpack(chosenSoda);
+                _inventory.Remove(chosenSoda);
+            }
+            if (paymentValue > chosenSoda.Price && _inventory.Count == 0)
+            {
+                UserInterface.DisplayError("Soda is out of stock.\n\nCannot complete the transaction.");
+                customer.AddCoinsIntoWallet(payment);
+            }
         }
         //Takes in the value of the amount of change needed.
         //Attempts to gather all the required coins from the sodamachine's register to make change.
@@ -167,7 +194,36 @@ namespace SodaMachine
         //If the change cannot be made, return null.
         private List<Coin> GatherChange(double changeValue)
         {
-            
+            List<Coin> changeToBeReturned = new List<Coin>();
+
+            while (changeValue > 0)
+            {
+                if (changeValue > 0.25)
+                {
+                    Coin quarter = GetCoinFromRegister("Quarter");
+                    changeToBeReturned.Add(quarter);
+                    changeValue -= quarter.Value;
+                }
+                else if (changeValue > 0.10)
+                {
+                    Coin dime = GetCoinFromRegister("Dime");
+                    changeToBeReturned.Add(dime);
+                    changeValue -= dime.Value;
+                }
+                else if (changeValue > 0.05)
+                {
+                    Coin nickel = GetCoinFromRegister("Nickel");
+                    changeToBeReturned.Add(nickel);
+                    changeValue -= nickel.Value;
+                }
+                else if (changeValue > 0)
+                {
+                    Coin penny = GetCoinFromRegister("Penny");
+                    changeToBeReturned.Add(penny);
+                    changeValue -= penny.Value;
+                }
+            }
+            return changeToBeReturned;
         }
         //Reusable method to check if the register has a coin of that name.
         //If it does have one, return true.  Else, false.
